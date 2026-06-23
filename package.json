@@ -1,0 +1,26 @@
+{
+  "name": "last-letter-webtoon-preview",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node web/src/generate-preview-gltf.mjs && python3 scripts/extract-ucx-collision.py",
+    "optimize:assets": "npm run generate && node --max-old-space-size=8192 scripts/optimize-assets.mjs",
+    "build": "vite build",
+    "dev": "vite --host 127.0.0.1",
+    "preview": "npm run generate && npm run dev",
+    "preview:mobile": "npm run optimize:assets && npm run dev -- --host 0.0.0.0",
+    "dev:https": "node scripts/dev-https.mjs"
+  },
+  "dependencies": {
+    "three": "^0.181.2",
+    "vite": "^7.1.5"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "^4.4.0",
+    "@gltf-transform/extensions": "^4.4.0",
+    "@gltf-transform/functions": "^4.4.0",
+    "fbx2gltf": "^0.9.7-p1",
+    "meshoptimizer": "^1.1.1",
+    "sharp": "^0.35.2"
+  }
+}

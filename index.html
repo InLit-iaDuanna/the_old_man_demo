@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/web/generated/ui_mobile/mail-icon.png" />
+    <title>最后一封信 Web Toon Preview</title>
+  </head>
+  <body>
+    <main id="app">
+      <canvas id="stage" aria-label="3D preview"></canvas>
+      <section id="ui-root" class="ui-root" aria-label="手机游戏界面">
+        <aside id="loading-screen" class="ui-screen loading-screen" aria-label="加载画面">
+          <div class="phone-frame loading-frame">
+            <img class="screen-art loading-art" src="/web/generated/ui_mobile/loading-art.webp" alt="" aria-hidden="true" />
+            <div class="loading-scene" aria-hidden="true">
+              <span class="loading-sky"></span>
+              <span class="loading-road"></span>
+              <span class="loading-crosswalk"></span>
+              <span class="loading-mailbag"></span>
+            </div>
+            <div class="loading-copy">
+              <span>最后一封信</span>
+              <strong>正在整理最后一封信...</strong>
+              <div class="loading-track" aria-hidden="true"><i id="loading-progress"></i></div>
+              <button type="button" id="loading-start" class="ui-primary" disabled>轻触开始</button>
+            </div>
+          </div>
+        </aside>
+
+        <aside id="calibration-screen" class="ui-screen calibration-screen" hidden aria-label="体感校准">
+          <div class="phone-frame calibration-frame">
+            <img id="calibration-guide" class="screen-art calibration-guide" src="/web/generated/ui_mobile/guide-1.webp" alt="" aria-hidden="true" />
+            <div class="calibration-orbit" aria-hidden="true">
+              <span></span>
+              <i></i>
+            </div>
+            <div class="calibration-copy">
+              <span id="calibration-kicker">体感引导</span>
+              <strong id="calibration-title">先把手机和身体对齐</strong>
+              <p id="calibration-status">登录后先完成一次全局体感设置，后续关卡会复用这份基线。</p>
+              <div class="loading-track" id="calibration-meter-track" aria-hidden="true" hidden><i id="calibration-meter"></i></div>
+              <p id="calibration-angle" class="calibration-readout" hidden>当前相对角度：0°</p>
+              <div id="calibration-gait" class="calibration-gait" hidden>
+                <div class="calibration-beat-row" aria-hidden="true">
+                  <span id="calibration-beat" class="calibration-beat"></span>
+                  <span class="calibration-beat-label">跟着节拍踏步 · 90/分</span>
+                </div>
+                <p id="calibration-stepfreq" class="calibration-readout">当前步频：0 步/分</p>
+              </div>
+              <button type="button" id="calibration-start" class="ui-primary">开始体感引导</button>
+              <button type="button" id="calibration-skip" class="ui-secondary">使用键鼠模式</button>
+            </div>
+          </div>
+        </aside>
+
+        <div id="task-toast" class="task-toast" hidden>
+          <span id="task-level">关卡一</span>
+          <strong id="task-text">走到爷爷身旁并挽住爷爷的手</strong>
+        </div>
+
+        <nav class="quick-actions" aria-label="快捷操作">
+          <button type="button" id="ui-pause" class="quick-action" aria-label="暂停">
+            <img class="ui-button-icon" src="/web/generated/ui_mobile/pause-button.png" alt="" />
+          </button>
+          <button type="button" id="ui-memory" class="quick-action" aria-label="记忆碎片">
+            <img class="ui-button-icon" src="/web/generated/ui_mobile/camera-button.png" alt="" />
+          </button>
+          <button type="button" id="ui-settings" class="quick-action" aria-label="设置">
+            <img class="ui-button-icon" src="/web/generated/ui_mobile/settings-button.png" alt="" />
+          </button>
+        </nav>
+
+        <aside id="dialog-panel" class="dialog-panel" hidden aria-live="polite">
+          <span id="dialog-speaker">爷爷</span>
+          <p id="dialog-text"></p>
+          <button type="button" id="dialog-next">继续</button>
+        </aside>
+
+        <aside id="memory-modal" class="ui-modal" hidden aria-label="记忆碎片">
+          <div class="ui-modal-shell memory-shell">
+            <button type="button" id="memory-close" class="ui-close">关闭</button>
+            <img id="memory-image" class="memory-image" alt="记忆碎片" />
+            <p id="memory-caption"></p>
+          </div>
+        </aside>
+
+        <aside id="delivery-panel" class="ui-modal" hidden aria-label="爷爷家送信">
+          <div class="ui-modal-shell delivery-shell">
+            <button type="button" id="delivery-close" class="ui-close">关闭</button>
+            <h2>在爷爷家送信</h2>
+            <p id="delivery-hint">擦掉信封上的时间污痕</p>
+            <div id="envelope-scratch" class="envelope-scratch" role="button" tabindex="0">
+              <img id="envelope-image" alt="小满启信封" />
+              <canvas id="scratch-canvas" aria-label="擦拭信封"></canvas>
+              <strong id="recipient-reveal" hidden>小满 启</strong>
+            </div>
+            <button type="button" id="open-letter" class="ui-primary" hidden>拆开信</button>
+            <img id="letter-image" class="letter-image" alt="爷爷的信" hidden />
+            <div id="signature-area" class="signature-area" hidden>
+              <span>邮政签收单</span>
+              <canvas id="signature-canvas" aria-label="手写签收"></canvas>
+              <button type="button" id="submit-signature" class="ui-primary">签收</button>
+            </div>
+          </div>
+        </aside>
+
+        <aside id="pause-screen" class="ui-modal" hidden aria-label="暂停">
+          <div class="ui-modal-shell pause-shell">
+            <div class="paper-clip" aria-hidden="true"></div>
+            <h2>暂停</h2>
+            <p>爷爷还在等这封信。整理一下脚步，再继续往前走。</p>
+            <button type="button" id="resume-game" class="ui-primary">继续</button>
+            <button type="button" id="restart-game" class="ui-secondary">重新开始</button>
+          </div>
+        </aside>
+
+        <aside id="settings-screen" class="ui-modal" hidden aria-label="设置">
+          <div class="ui-modal-shell pause-shell settings-shell">
+            <button type="button" id="settings-close" class="ui-close">关闭</button>
+            <h2>关卡选择</h2>
+            <p>把进度拉回任意一关重新游玩。会从该关起点带你重新开始。</p>
+            <button type="button" class="ui-secondary" data-jump-level="1">关卡一 · 牵起爷爷的手</button>
+            <button type="button" class="ui-secondary" data-jump-level="2">关卡二 · 陪爷爷去邮局</button>
+            <button type="button" class="ui-secondary" data-jump-level="3">关卡三 · 陪爷爷去学校</button>
+            <button type="button" class="ui-secondary" data-jump-level="4">关卡四 · 陪爷爷回家</button>
+          </div>
+        </aside>
+
+        <aside id="ending-screen" class="ui-modal ending-screen" hidden aria-label="结语">
+          <div class="phone-frame ending-frame" data-ending-step="0">
+            <img id="ending-art" class="screen-art ending-art" src="/web/generated/ui_mobile/ending-1.webp" alt="" aria-hidden="true" />
+            <div class="ending-copy">
+              <span id="ending-kicker" hidden>这封信，终于送到了。</span>
+              <h2 id="ending-title" hidden>请记得回家，也记得慢慢走</h2>
+              <p id="ending-text" hidden>
+                中国目前约有1500万名阿尔茨海默病患者。走失往往发生在一次短暂的分心之后，也可能发生在熟悉的回家路上。
+              </p>
+              <button type="button" id="ending-next" class="ui-primary">继续</button>
+            </div>
+          </div>
+        </aside>
+      </section>
+      <div id="objective-arrow" class="objective-arrow" hidden aria-hidden="true">
+        <span class="objective-arrow-icon">↑</span>
+        <span id="objective-distance" class="objective-distance"></span>
+      </div>
+      <button type="button" id="talk-prompt" class="talk-prompt" hidden>💬 点击语音交谈</button>
+      <div id="grandpa-say" class="grandpa-say" hidden aria-live="polite">
+        <span class="grandpa-say-name">爷爷</span>
+        <span id="grandpa-say-text" class="grandpa-say-text"></span>
+      </div>
+      <div id="mode-fade" class="mode-fade" aria-hidden="true"></div>
+      <section class="hud" aria-label="Preview controls">
+        <div class="title">
+          <span>最后一封信</span>
+          <strong>Web Toon Preview</strong>
+        </div>
+        <div class="controls">
+          <button type="button" data-mode="palette" class="active">白天色表</button>
+          <button type="button" data-mode="texture">贴图平涂</button>
+          <button type="button" data-mode="memory">黄昏记忆</button>
+          <button type="button" data-mode="night">夜晚冷区</button>
+        </div>
+        <button type="button" id="debug-toggle" class="debug-toggle" aria-pressed="false" hidden>空间标记</button>
+        <div class="meter">
+          <span id="status">正在加载场景...</span>
+        </div>
+      </section>
+      <aside id="debug-panel" class="debug-panel" hidden aria-label="Space marker debug panel">
+        <div class="debug-header">
+          <strong>空间标记</strong>
+          <button type="button" id="debug-close">关闭</button>
+        </div>
+        <div id="debug-hit" class="debug-hit">点击模型表面添加点</div>
+        <div class="debug-actions">
+          <button type="button" id="debug-copy">复制坐标</button>
+          <button type="button" id="debug-clear">清空</button>
+        </div>
+        <ol id="debug-list" class="debug-list"></ol>
+      </aside>
+      <aside id="mailbox-quest" class="quest-panel" hidden aria-label="邮箱任务">
+        <div class="quest-shell">
+          <header class="quest-header">
+            <strong>邮箱任务</strong>
+            <button type="button" id="quest-close">关闭</button>
+          </header>
+          <div class="property-stage" aria-label="邮包线索">
+            <img
+              id="property-bag"
+              class="property-bag"
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+              alt=""
+            />
+            <button type="button" class="property-item property-mail" data-property-item="mail" aria-label="信件">
+              <img
+                data-property-image="mail"
+                src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+                alt=""
+              />
+            </button>
+            <button type="button" class="property-item property-key property-key-1" data-property-item="key1" aria-label="钥匙 1">
+              <img data-property-image="key1" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="" />
+            </button>
+            <button type="button" class="property-item property-key property-key-2" data-property-item="key2" aria-label="钥匙 2">
+              <img data-property-image="key2" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="" />
+            </button>
+            <button type="button" class="property-item property-key property-key-3" data-property-item="key3" aria-label="钥匙 3">
+              <img data-property-image="key3" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="" />
+            </button>
+          </div>
+          <div id="quest-hint" class="quest-hint">点击信件查看过去。</div>
+        </div>
+      </aside>
+      <aside id="listen-overlay" class="ui-modal listen-overlay" hidden aria-label="倾听">
+        <div class="ui-modal-shell listen-shell">
+          <span class="listen-kicker">倾听</span>
+          <p id="listen-story" class="listen-story">把手贴在旧信箱上，听爷爷把这段话讲完。</p>
+          <div class="listen-track" aria-hidden="true"><i id="listen-meter"></i></div>
+          <button type="button" id="listen-button" class="ui-primary listen-button">长按倾听</button>
+          <p id="listen-hint" class="listen-hint">按住不要松手，耐心听完三遍。</p>
+        </div>
+      </aside>
+      <aside id="school-quest" class="quest-panel" hidden aria-label="记忆拼图">
+        <div class="quest-shell school-quest-shell">
+          <header class="quest-header">
+            <strong>记忆拼图</strong>
+            <button type="button" id="school-quest-close">关闭</button>
+          </header>
+          <div id="school-sort-stage" class="school-sort-stage" aria-label="记忆拼图">
+            <button type="button" class="school-sort-source school-sort-source-1" data-school-sort-tile="hug" aria-label="图 1"></button>
+            <button type="button" class="school-sort-source school-sort-source-2" data-school-sort-tile="cry" aria-label="图 2"></button>
+            <button type="button" class="school-sort-source school-sort-source-3" data-school-sort-tile="ride" aria-label="图 3"></button>
+            <button type="button" class="school-sort-source school-sort-source-4" data-school-sort-tile="letter" aria-label="图 4"></button>
+            <button type="button" class="school-sort-slot school-sort-slot-1" data-school-sort-slot="0" data-slot-label="1" aria-label="第 1 格"></button>
+            <button type="button" class="school-sort-slot school-sort-slot-2" data-school-sort-slot="1" data-slot-label="2" aria-label="第 2 格"></button>
+            <button type="button" class="school-sort-slot school-sort-slot-3" data-school-sort-slot="2" data-slot-label="3" aria-label="第 3 格"></button>
+            <button type="button" class="school-sort-slot school-sort-slot-4" data-school-sort-slot="3" data-slot-label="4" aria-label="第 4 格"></button>
+          </div>
+          <div class="school-sort-actions">
+            <button type="button" id="school-sort-reset">重置</button>
+            <button type="button" id="school-sort-submit">提交</button>
+          </div>
+          <div id="school-sort-hint" class="quest-hint">把散落的旧明信片拼回原来的画面。</div>
+        </div>
+      </aside>
+    </main>
+    <script type="module" src="/web/src/main.js"></script>
+  </body>
+</html>

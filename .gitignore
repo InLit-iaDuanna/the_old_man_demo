@@ -1,0 +1,24 @@
+.DS_Store
+
+# Dependencies and local package-manager state
+node_modules/
+node_modules/.vite/
+
+# Local test/browser artifacts
+.playwright-cli/
+output/
+
+# Local HTTPS certificates generated for LAN testing
+.cert/
+
+# Build output is reproducible from source assets.
+dist/
+
+# Asset-processing scratch files. Final generated runtime assets stay tracked.
+web/generated/tmp_*
+web/generated/Demo1_LOD.glb
+web/generated/grandpa_mobile.glb
+
+# Large source art/model archives are kept outside Git history.
+models/Demo0620_1/
+models/Demo0620_1.zip

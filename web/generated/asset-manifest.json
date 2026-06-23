@@ -1,0 +1,89 @@
+{
+  "scene": {
+    "meshopt": "/web/generated/Demo0620_1_webtoon_mobile_meshopt.gltf",
+    "mobile": "/web/generated/Demo0620_1_webtoon_mobile.gltf",
+    "fallback": "/web/generated/Demo0620_1_webtoon.gltf"
+  },
+  "lodMobile": "/web/generated/Demo1_LOD_mobile.gltf",
+  "property": {
+    "bag_now": {
+      "webp": "/web/generated/property_mobile/bag_now.webp",
+      "png": "/web/generated/property_mobile/bag_now.png"
+    },
+    "bag_past": {
+      "webp": "/web/generated/property_mobile/bag_past.webp",
+      "png": "/web/generated/property_mobile/bag_past.png"
+    },
+    "mail_now": {
+      "webp": "/web/generated/property_mobile/mail_now.webp",
+      "png": "/web/generated/property_mobile/mail_now.png"
+    },
+    "mail_past": {
+      "webp": "/web/generated/property_mobile/mail_past.webp",
+      "png": "/web/generated/property_mobile/mail_past.png"
+    },
+    "key_now_1": {
+      "webp": "/web/generated/property_mobile/key_now_1.webp",
+      "png": "/web/generated/property_mobile/key_now_1.png"
+    },
+    "key_now_2": {
+      "webp": "/web/generated/property_mobile/key_now_2.webp",
+      "png": "/web/generated/property_mobile/key_now_2.png"
+    },
+    "key_now_3": {
+      "webp": "/web/generated/property_mobile/key_now_3.webp",
+      "png": "/web/generated/property_mobile/key_now_3.png"
+    },
+    "key_past_1": {
+      "webp": "/web/generated/property_mobile/key_past_1.webp",
+      "png": "/web/generated/property_mobile/key_past_1.png"
+    },
+    "key_past_2": {
+      "webp": "/web/generated/property_mobile/key_past_2.webp",
+      "png": "/web/generated/property_mobile/key_past_2.png"
+    },
+    "key_past_3": {
+      "webp": "/web/generated/property_mobile/key_past_3.webp",
+      "png": "/web/generated/property_mobile/key_past_3.png"
+    }
+  },
+  "school": {
+    "board": {
+      "webp": "/web/generated/school_mobile/board.webp",
+      "fallback": "/web/generated/school_mobile/board.jpg"
+    },
+    "letter": {
+      "webp": "/web/generated/school_mobile/letter.webp",
+      "fallback": "/web/generated/school_mobile/letter.jpg"
+    },
+    "ride": {
+      "webp": "/web/generated/school_mobile/ride.webp",
+      "fallback": "/web/generated/school_mobile/ride.jpg"
+    },
+    "cry": {
+      "webp": "/web/generated/school_mobile/cry.webp",
+      "fallback": "/web/generated/school_mobile/cry.jpg"
+    },
+    "hug": {
+      "webp": "/web/generated/school_mobile/hug.webp",
+      "fallback": "/web/generated/school_mobile/hug.jpg"
+    }
+  },
+  "ui": {
+    "mailIcon": "/web/generated/ui_mobile/mail-icon.png",
+    "memory1Icon": "/web/generated/ui_mobile/memory-1-icon.png",
+    "memory2Icon": "/web/generated/ui_mobile/memory-2-icon.png",
+    "pauseButton": "/web/generated/ui_mobile/pause-button.png",
+    "settingsButton": "/web/generated/ui_mobile/settings-button.png",
+    "cameraButton": "/web/generated/ui_mobile/camera-button.png",
+    "skipButton": "/web/generated/ui_mobile/skip-button.png",
+    "paperclip": "/web/generated/ui_mobile/paperclip.png",
+    "taskToastPanel": "/web/generated/ui_mobile/task-toast-panel.png",
+    "dialogPanel": "/web/generated/ui_mobile/dialog-panel.png",
+    "letterGrandpa": "/web/generated/ui_mobile/letter-grandpa.png",
+    "memory1Card": "/web/generated/ui_mobile/memory-1-card.png",
+    "memory21Card": "/web/generated/ui_mobile/memory-2-1-card.png",
+    "memory22Card": "/web/generated/ui_mobile/memory-2-2-card.png",
+    "memory23Card": "/web/generated/ui_mobile/memory-2-3-card.png"
+  }
+}
